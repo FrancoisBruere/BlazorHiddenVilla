@@ -11,24 +11,49 @@ Welcome to your new app.
 <h2 class="bg-light border p-2">
     First Room
 </h2>
-Room: @Room.RoomName;
+Room: @Room.RoomName
 <br />  
-Price: @Room.Price;
+Price: @Room.Price
 <br />  
 <input type="number" name="name" @bind-value="@Room.Price" @bind-value:event="onchange" />
 <br />
 <input type="checkbox" name="chkBox" @bind-value="@Room.IsActive" checked="@(Room.IsActive?"checked":null)" /> &nbsp; Is Active
 <br />
-<span>This room is@(Room.IsActive? " Active":" Inactive")</span>
+<span>This room is @(Room.IsActive? "Active":"Inactive")</span>
+<br />
+<span>Room Property: </span>
 
+<select @bind="@SelectedRoomProp">
+
+    @foreach (var prop in Room.RoomProps)
+    {
+       <option value="@prop.Name @prop.Value">@prop.Name</option>
+    }
+
+</select>
+
+<br />
+<span>The room property selected is: @SelectedRoomProp</span>
 
 @code{
+
+    string SelectedRoomProp = "";
+
     Model.BlazorRoom Room = new Model.BlazorRoom()
     {
         Id = 1,
         RoomName = "Villa Suite",
         IsActive = true,
-        Price = 499
+        Price = 499,
+
+        
+
+        RoomProps = new List<Model.BlazorRoomProp>()
+            {
+                new Model.BlazorRoomProp{Id=1,Name="Sq Ft",Value="100" },
+                new Model.BlazorRoomProp{Id=2,Name="Occupancy",Value="3" }
+            }
+
     };
 
 }
