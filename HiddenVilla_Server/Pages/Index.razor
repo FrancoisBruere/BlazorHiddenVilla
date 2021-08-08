@@ -1,0 +1,32 @@
+﻿@page "/"
+
+
+
+@*<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />*@
+
+<h2 class="bg-light border p-2">
+    First Room
+</h2>
+Room: @Room.RoomName;
+<br />  
+Price: @Room.Price;
+<br />  
+
+<input type="number" name="name" @bind-value="@Room.Price" @bind-value:event="onchange" />
+
+
+
+@code{
+    Model.BlazorRoom Room = new Model.BlazorRoom()
+    {
+        Id = 1,
+        RoomName = "Villa Suite",
+        IsActive = true,
+        Price = 499
+    };
+
+}
