@@ -15,9 +15,11 @@ Room: @Room.RoomName;
 <br />  
 Price: @Room.Price;
 <br />  
-
 <input type="number" name="name" @bind-value="@Room.Price" @bind-value:event="onchange" />
-
+<br />
+<input type="checkbox" name="chkBox" @bind-value="@Room.IsActive" checked="@(Room.IsActive?"checked":null)" /> &nbsp; Is Active
+<br />
+<span>This room is@(Room.IsActive? " Active":" Inactive")</span>
 
 
 @code{
