@@ -6,9 +6,22 @@
     <h2 class="text-info">Room List[Using Component]</h2>
 
     <div class="row container">
+        <div class="col-12">
+            <h4 class="text-info">Hotel Rooms</h4>
+        </div>
         @foreach (var room in RoomsList)
         {
             <IndividualRoom Room="@room"></IndividualRoom>
+
+        }
+    
+
+    <div class="col-12 mt-4">
+        <h4 class="text-info">Hotel Amenities[Assignment]</h4>
+        </div>
+        @foreach (var amenity in AmenitiesList)
+        {
+            <IndividualAmenities Amenity="@amenity"></IndividualAmenities>
 
         }
     </div>
@@ -18,14 +31,42 @@
 
 
 
+
 @code{
 
 
+    List<Amenities> AmenitiesList = new List<Amenities>();
+
     List<BlazorRoom> RoomsList = new List<BlazorRoom>();
+
+
+
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        AmenitiesList.Add(new Amenities()
+        {
+            Id = 111,
+            Type = "Gym",
+            Details = "24x7 gym is available"
+        });
+
+        AmenitiesList.Add(new Amenities()
+        {
+            Id = 222,
+            Type = "Swimming Pool",
+            Details = "Pool is open from 6am to 10pm"
+        });
+
+        AmenitiesList.Add(new Amenities()
+        {
+            Id = 333,
+            Type = "Free Breakfast",
+            Details = "Enjoy breakfast free 6am to 10am"
+        });
+
 
         RoomsList.Add(new BlazorRoom()
         {
