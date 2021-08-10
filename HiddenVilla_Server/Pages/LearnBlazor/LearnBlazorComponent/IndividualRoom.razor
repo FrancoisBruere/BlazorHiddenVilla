@@ -7,15 +7,15 @@
     <input type="checkbox" @bind-value="@Room.IsActive" checked="@(Room.IsActive? "checked":null)" /> &nbsp; Is Active <br />
     <span>This room is @(Room.IsActive? "Active" : "InActive")</span>
 
-
-    @if (Room.IsActive)
-    {
-        @foreach (var roomProp in Room.RoomProps)
+    
+        @if (Room.IsActive)
         {
-            <p>@roomProp.Name - @roomProp.Value</p>
+            @foreach (var roomProp in Room.RoomProps)
+            {
+                <p>@roomProp.Name - @roomProp.Value</p>
+            }
         }
-    }
-
+    
     <EditDeleteButton IsAdmin="true"></EditDeleteButton>
 </div>
 
@@ -26,6 +26,8 @@
 
     [Parameter]
     public EventCallback<bool> OnRoomCheckboxSelected { get; set; }
+
+   
 
     protected async Task RoomCheckboxSelectedChanged(ChangeEventArgs e)
     {
