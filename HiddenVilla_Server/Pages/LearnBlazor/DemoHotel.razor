@@ -5,7 +5,7 @@
 <div class="border p-2 mt-2" style="background-color:azure">
     <h2 class="text-info">Room List[Using Component]</h2>
 
-    <div class="row container">
+    <div class="row container-fluid">
         <div class="col-12">
             <h4 class="text-info">Hotel Rooms</h4>
         </div>
@@ -98,6 +98,23 @@
             {
                 new BlazorRoomProp{Id=1,Name="Sq Ft",Value="130" },
                 new BlazorRoomProp{Id=2,Name="Occupancy",Value="4" }
+            }
+
+        });
+
+        RoomsList.Add(new BlazorRoom()
+        {
+            Id = 301,
+            RoomName = "Hotel Suite Ocean View",
+            IsActive = true,
+            Price = 800,
+
+
+
+            RoomProps = new List<BlazorRoomProp>()
+            {
+                new BlazorRoomProp{Id=1,Name="Sq Ft",Value="200" },
+                new BlazorRoomProp{Id=2,Name="Occupancy",Value="6" }
             }
 
         });
