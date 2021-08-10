@@ -7,11 +7,12 @@
 
     <div class="row container-fluid">
         <div class="col-12">
-            <h4 class="text-info">Hotel Rooms</h4>
+            <h4 class="text-info" >Hotel Rooms</h4>
+            <span>Rooms Selected: @SelectedRooms</span>
         </div>
         @foreach (var room in RoomsList)
         {
-            <IndividualRoom Room="@room"></IndividualRoom>
+            <IndividualRoom OnRoomCheckboxSelected="RoomsSelectedCounterChanged" Room="@room"></IndividualRoom>
 
         }
     
@@ -35,10 +36,26 @@
 @code{
 
 
+
+
     List<Amenities> AmenitiesList = new List<Amenities>();
 
     List<BlazorRoom> RoomsList = new List<BlazorRoom>();
 
+    public int SelectedRooms { get; set; } = 0;
+
+    protected void RoomsSelectedCounterChanged(bool IsRoomSelected)
+    {
+        if (IsRoomSelected)
+        {
+            SelectedRooms++;
+        }
+        else
+        {
+            SelectedRooms--;
+        }
+
+    }
 
 
 
@@ -118,6 +135,10 @@
             }
 
         });
+
+
     }
+
+
 
 }

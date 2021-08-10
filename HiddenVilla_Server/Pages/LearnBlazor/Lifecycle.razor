@@ -40,7 +40,7 @@
     protected override async Task OnInitializedAsync()
     {
         EventType.Add("on initialized Async is called");
-        // await Task.Delay(3000);
+        await Task.Delay(3000);
 
     }
 
@@ -52,7 +52,7 @@
     protected override async Task OnParametersSetAsync()
     {
         EventType.Add("on parameter Async is called");
-        // await Task.Delay(3000);
+        await Task.Delay(3000);
 
     }
 
