@@ -1,13 +1,24 @@
 ﻿<div>
     <div class="alert alert-info">@Title</div>
-    @if (ChildContent is null)
+
+    @if (DangerChildContent == null)
     {
-        <span>Default for empty render Fragment 2nd component</span>
+
+
+        @if (ChildContent is null)
+        {
+            <span>Default for empty render Fragment 2nd component</span>
+        }
+        else
+        {
+            <span>@ChildContent</span> <br />
+
+
+        }
     }
     else
     {
-        <span>@ChildContent</span>
-
+        <span>@DangerChildContent</span>
     }
 
 
@@ -20,5 +31,8 @@
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment DangerChildContent { get; set; }
 
 }
