@@ -4,7 +4,8 @@
     <h4 class="text-secondary">Amenities - @Amenity.Id</h4>
 
     @Amenity.Type <br />
-    @Amenity.Details
+    @Amenity.Details<br />
+    RF from Parent - @FragmentOne @FragmentTwo
 
 </div>
 
@@ -16,7 +17,13 @@
     [Parameter]
     public EventCallback<string> OnAmenitiesSelection { get; set; }
 
-    protected async Task AmenitiesSelectionChanged(MouseEventArgs e, string type) 
+    [Parameter]
+    public RenderFragment FragmentOne { get; set; }
+
+    [Parameter]
+    public RenderFragment FragmentTwo { get; set; }
+
+    protected async Task AmenitiesSelectionChanged(MouseEventArgs e, string type)
     {
 
         await OnAmenitiesSelection.InvokeAsync((string)type);
