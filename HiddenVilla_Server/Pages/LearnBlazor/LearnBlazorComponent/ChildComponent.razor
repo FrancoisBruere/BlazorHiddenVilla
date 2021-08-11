@@ -1,6 +1,17 @@
 ﻿<div>
     <div class="alert alert-info">@Title</div>
-    <span>@ChildContent</span>
+    @if (ChildContent is null)
+    {
+        <span>Default for empty render Fragment 2nd component</span>
+    }
+    else
+    {
+        <span>@ChildContent</span>
+
+    }
+
+
+
 </div>
 
 @code {
