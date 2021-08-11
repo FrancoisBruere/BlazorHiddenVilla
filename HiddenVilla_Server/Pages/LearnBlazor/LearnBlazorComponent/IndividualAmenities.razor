@@ -1,6 +1,6 @@
 ﻿@using HiddenVilla_Server.Model
-<div class="bg-light border p-2 col-5 offset-1 mb-2" @onclick="(args) => AmenitiesSelectionChanged(args, Amenity.Type)">
-    @*//    *@
+<div class="bg-light border p-2 col-5 offset-1 mb-2" @onclick="(args) => AmenitiesSelectionChanged(args, Amenity.Type)" >
+  
     <h4 class="text-secondary">Amenities - @Amenity.Id</h4>
 
     @Amenity.Type <br />
@@ -16,7 +16,7 @@
     [Parameter]
     public EventCallback<string> OnAmenitiesSelection { get; set; }
 
-    protected async Task AmenitiesSelectionChanged(MouseEventArgs e, string type) // 
+    protected async Task AmenitiesSelectionChanged(MouseEventArgs e, string type) 
     {
 
         await OnAmenitiesSelection.InvokeAsync((string)type);
