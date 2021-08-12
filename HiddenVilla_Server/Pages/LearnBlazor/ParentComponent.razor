@@ -18,17 +18,11 @@
 
 </ChildComponent>
 
-<AnotherChildComponent InputAttributes="InputAttributesFomParent" ></AnotherChildComponent>
+<AnotherChildComponent placeholder="placeholder default" ></AnotherChildComponent>
 
 @code {
 
-    public Dictionary<string, object> InputAttributesFomParent { get; set; } = new Dictionary<string, object>()
-    {
-        {"required", "Required"},
-        {"maxlength", 5},
-        {"placeholder", "Enter the Room Name from Parent" },
 
-    };
 
 
 
