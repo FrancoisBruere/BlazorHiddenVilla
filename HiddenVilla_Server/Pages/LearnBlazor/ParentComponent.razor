@@ -5,24 +5,20 @@
 <h3 class="text-danger">Parent Child Component</h3>
 
 
+<CascadingValue Value="MessageToGrandChild">
+    <ChildComponent Title="This title is passed as parameter from Parent Component">
 
-<ChildComponent Title="This title is passed as parameter from Parent Component">
-
-    <ChildContent> Render Fragment from Parent!</ChildContent>
-    <DangerChildContent>Second render fragment from parent to danger child content prop in child </DangerChildContent>
-</ChildComponent>
-
-<ChildComponent Title="This second title passes as parameter from Parent Component with no Render fragment">
-
-
-
-</ChildComponent>
-
+        <ChildContent> Render Fragment from Parent!</ChildContent>
+        <DangerChildContent>Second render fragment from parent to danger child content prop in child </DangerChildContent>
+    </ChildComponent>
+</CascadingValue>
 <AnotherChildComponent placeholder="placeholder default" ></AnotherChildComponent>
+
+
 
 @code {
 
-
+    private string MessageToGrandChild = "passing this message from parent to grand Child";
 
 
 
