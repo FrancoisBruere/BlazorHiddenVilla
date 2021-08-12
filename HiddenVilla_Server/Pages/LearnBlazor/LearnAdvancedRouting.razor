@@ -29,7 +29,7 @@
 
     private void LoadParameters()
     {
-
+        //to extract param from uri
         var absoluteUri = new Uri(NavigationManager.Uri);
         var queryParam = System.Web.HttpUtility.ParseQueryString(absoluteUri.Query);
         Param1 = queryParam["Param1"];
