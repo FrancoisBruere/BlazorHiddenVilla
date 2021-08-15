@@ -47,14 +47,14 @@ namespace Business.Repository
             return 0;
         }
 
-        public Task<IEnumerable<HotelRoomDTO>> GetAllHotelRooms() //check without async
+        public async Task<IEnumerable<HotelRoomDTO>> GetAllHotelRooms()
         {
             try
             {
                IEnumerable<HotelRoomDTO> hotelRoomDTOs = 
                     _mapper.Map<IEnumerable<HotelRoom>, IEnumerable<HotelRoomDTO>>(_db.HotelRooms);
 
-                return (Task<IEnumerable<HotelRoomDTO>>)hotelRoomDTOs; //check with cast
+                return hotelRoomDTOs;
             }
             catch (Exception ex)
             {
