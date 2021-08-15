@@ -1,5 +1,8 @@
 ﻿@page "/hotel-room/create"
 @using Models
+@using Business.Repository.IRepository
+@inject IHotelRoomRepository HotelRoomRepository
+@inject NavigationManager NavigationManager
 <div class="row mt-2 mb-5">
     <h3 class="card-title text-info md-3 ml-1 col-12">@Title Hotel Room</h3>
     <div class="card col-6">
@@ -48,8 +51,20 @@
 
     private async Task HandelHotelRoomUpsert()
     {
+        var roomDetailsByName = await HotelRoomRepository.IsRoomUnique(HotelRoomModel.Name);
 
-       
+        if (roomDetailsByName != null)
+        {
+            // there is a duplicate room show error
+            return;
+        }
+        else
+        {
+            var createdResult = await HotelRoomRepository.CreateHotelRoom(HotelRoomModel); //pass DTO in form created to CreateHotelRoom method
+            NavigationManager.NavigateTo("hotel-room");
+
+        }
+
     }
 
 }
