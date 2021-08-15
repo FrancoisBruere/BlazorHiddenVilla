@@ -1,0 +1,55 @@
+﻿@page "/hotel-room/create"
+@using Models
+<div class="row mt-2 mb-5">
+    <h3 class="card-title text-info md-3 ml-1 col-12">@Title Hotel Room</h3>
+    <div class="card col-6">
+        <div class="card-body">
+            <EditForm Model="HotelRoomModel" OnValidSubmit="HandelHotelRoomUpsert">
+                <DataAnnotationsValidator/>
+                @*<ValidationSummary/>*@
+                <div class="form-group">
+                    <label>Name</label>
+                    <InputText @bind-Value="HotelRoomModel.Name" class="form-control"></InputText>
+                    <ValidationMessage For="()=>HotelRoomModel.Name"/>
+                </div>
+                <div class="form-group">
+                    <label>Occupancy</label>
+                    <InputNumber @bind-Value="HotelRoomModel.Occupancy" class="form-control"></InputNumber>
+                    <ValidationMessage For="()=>HotelRoomModel.Occupancy" />
+                </div>
+                <div class="form-group">
+                    <label>Regular Rate</label>
+                    <InputNumber @bind-Value="HotelRoomModel.RegularRate" class="form-control"></InputNumber>
+                    <ValidationMessage For="()=>HotelRoomModel.RegularRate" />
+                </div>
+                <div class="form-group">
+                    <label>Square Feet</label>
+                    <InputText @bind-Value="HotelRoomModel.SqFt" class="form-control"></InputText>
+                </div>
+                <div class="form-group">
+                    <label>Details</label>
+                    <InputTextArea @bind-Value="HotelRoomModel.Details" class="form-control"></InputTextArea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">@Title Room</button>
+                    <NavLink href="hotel-room" class="btn btn-secondary">Back to Index</NavLink>
+                </div>
+
+            </EditForm>
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    private HotelRoomDTO HotelRoomModel { get; set; } = new HotelRoomDTO();
+    private string Title { get; set; } = "Create";
+
+    private async Task HandelHotelRoomUpsert()
+    {
+
+       
+    }
+
+}

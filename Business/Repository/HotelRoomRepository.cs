@@ -47,14 +47,14 @@ namespace Business.Repository
             return 0;
         }
 
-        public async Task<IEnumerable<HotelRoomDTO>> GetAllHotelRooms()
+        public Task<IEnumerable<HotelRoomDTO>> GetAllHotelRooms() //check without async
         {
             try
             {
                IEnumerable<HotelRoomDTO> hotelRoomDTOs = 
                     _mapper.Map<IEnumerable<HotelRoom>, IEnumerable<HotelRoomDTO>>(_db.HotelRooms);
 
-                return hotelRoomDTOs;
+                return (Task<IEnumerable<HotelRoomDTO>>)hotelRoomDTOs; //check with cast
             }
             catch (Exception ex)
             {
@@ -104,7 +104,7 @@ namespace Business.Repository
                 if (roomId == hotelRoomDTO.Id)
                 {
                     // valid
-                    HotelRoom roomDetails = await _db.HotelRooms.FindAsync(roomId); // retrieve record an plave in var
+                    HotelRoom roomDetails = await _db.HotelRooms.FindAsync(roomId); // retrieve record and place in var
                     // mapping
                     HotelRoom room = _mapper.Map<HotelRoomDTO, HotelRoom>(hotelRoomDTO, roomDetails);
                     room.UpdatedBy = "Developer";
