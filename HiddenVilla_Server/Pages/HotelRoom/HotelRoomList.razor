@@ -15,16 +15,14 @@
 
 <div class="row mt-4">
     <div class="col-12">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" onclick="">
             <thead>
-                <tr>
+                <tr class="bg-light">
                     <th>Name</th>
                     <th>Occupancy</th>
                     <th>Rate</th>
                     <th>Sqft</th>
-                    <th>
-
-                    </th>
+                    <th>Edit/Delete</th>
                 </tr>
 
             </thead>
@@ -33,20 +31,24 @@
                 {
                     foreach (var room in HotelRooms)
                     {
-                <tr>
-                    <td>@room.Name</td>
-                    <td>@room.Occupancy</td>
-                    <td>@room.RegularRate.ToString("c")</td>
-                    <td>@room.SqFt</td>
-                    <td> edit delete link</td>
-                </tr>
+                        <tr>
+                            <td>@room.Name</td>
+                            <td>@room.Occupancy</td>
+                            <td>@room.RegularRate.ToString("c")</td>
+                            <td>@room.SqFt</td>
+                            <td>
+                                
+                                <NavLink href="edit-delete" class="btn btn-outline-info">Edit / Delete</NavLink>
+                                
+                            </td>
+                        </tr>
                     }
                 }
                 else
                 {
                     <tr>
                         <td colspan="5">
-                            No records fount
+                            No records found
                         </td>
                     </tr>
                 }
@@ -58,6 +60,8 @@
 </div>
 
 @code {
+
+    
 
     private IEnumerable<HotelRoomDTO> HotelRooms { get; set; } = new List<HotelRoomDTO>();
 
