@@ -1,4 +1,5 @@
-﻿<div>
+﻿@inject IJSRuntime JsRuntime
+<div>
     <div class="alert alert-info">@Title</div>
 
     @if (DangerChildContent == null)
@@ -34,6 +35,11 @@
     [Parameter]
     public RenderFragment DangerChildContent { get; set; }
 
-  
+  public async Task ShowToasterSuccess()
+        {
+
+        await JsRuntime.ToasterSeccess("Whoohoo Success!");
+
+        }
 
 }

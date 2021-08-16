@@ -7,7 +7,8 @@
 
 <CascadingValue Value="MessageToGrandChild" Name="MessageFromParent">
     <CascadingValue Value="@LuckyNumber" Name="LuckyNumberParent">
-        <ChildComponent Title="This title is passed as parameter from Parent Component">
+        <ChildComponent @ref="childComp"
+                        Title="This title is passed as parameter from Parent Component">
 
             <ChildContent> Render Fragment from Parent!</ChildContent>
             <DangerChildContent>Second render fragment from parent to danger child content prop in child </DangerChildContent>
@@ -16,6 +17,9 @@
 </CascadingValue>
 <AnotherChildComponent placeholder="placeholder default" ></AnotherChildComponent>
 
+<div class="row">
+    <button class="btn btn-success" @onclick="()=>childComp.ShowToasterSuccess()">show alert</button>
+</div>
 
 
 @code {
@@ -23,5 +27,6 @@
     private string MessageToGrandChild = "passing this message from parent to grand Child";
     private string LuckyNumber = "7";
 
+    private ChildComponent childComp;
 
 }
