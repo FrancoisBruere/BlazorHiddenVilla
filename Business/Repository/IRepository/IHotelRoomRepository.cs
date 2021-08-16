@@ -19,7 +19,7 @@ namespace Business.Repository.IRepository
 
         public Task<IEnumerable<HotelRoomDTO>> GetAllHotelRooms();
 
-        public Task<HotelRoomDTO> IsRoomUnique(string name);
+        public Task<HotelRoomDTO> IsRoomUnique(string name, int roomId=0);
 
 
     }
