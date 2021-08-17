@@ -83,7 +83,7 @@
 
         try
         {
-            if (HotelRoomModel.Id!=0 && Title=="Update")
+            if (HotelRoomModel.Id != 0 && Title == "Update")
             {
                 // this is update
                 var updateResults = await HotelRoomRepository.UpdateHotelRoom(HotelRoomModel.Id, HotelRoomModel);

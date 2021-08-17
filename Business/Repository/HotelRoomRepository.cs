@@ -87,12 +87,14 @@ namespace Business.Repository
             {
                 if (roomId == 0)
                 {
+                    //update
                     HotelRoomDTO hotelRoom = _mapper.Map<HotelRoom, HotelRoomDTO>(
                     await _db.HotelRooms.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower()));
                     return hotelRoom;
                 }
                 else
                 {
+                    //create
                     HotelRoomDTO hotelRoom = _mapper.Map<HotelRoom, HotelRoomDTO>(
                     await _db.HotelRooms.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower()
                     && x.Id != roomId));
