@@ -17,6 +17,7 @@ namespace HiddenVilla_Server.Service
         {
             this._webHostEnvironment = webHostEnvironment;
         }
+
         public bool DeleteFile(string fileName)
         {
 
@@ -36,9 +37,6 @@ namespace HiddenVilla_Server.Service
 
                 throw new FileNotFoundException("Something went wrong with file delete", ex);
             }
-
-           
-
 
         }
 
