@@ -10,7 +10,7 @@
 
 <div class="row mt-2 mb-5">
     <h3 class="card-title text-info md-3 ml-1 col-12">@Title Hotel Room</h3>
-    <div class="card col-6">
+    <div class="card col-12">
         <div class="card-body">
             <EditForm Model="HotelRoomModel" OnValidSubmit="HandelHotelRoomUpsert">
                 <DataAnnotationsValidator/>
@@ -47,15 +47,15 @@
 
                             foreach (var roomImage in HotelRoomModel.ImageUrls)
                             {
-                                <div class="col-md-2 mt-3">
-                                    <div class="room-image" style="background: url('@roomImage') 50% 50%; "></div>
-                                    <span class="room-image-title">@serial</span>
-                                </div>
+                        <div class="col-md-2 mt-3">
+                            <div class="room-image" style="background: url('@roomImage') 50% 50%; "></div>
+                            <span class="room-image-title">@serial</span>
 
-                                <button type="button" class="btn btn-outline-danger btn-block mt-4">
-                                    Delete
-                                </button>
-                    
+
+                            <button type="button" class="btn btn-outline-danger btn-block mt-4">
+                                Delete
+                            </button>
+                        </div>
                                 serial++;
                             }
                         }
