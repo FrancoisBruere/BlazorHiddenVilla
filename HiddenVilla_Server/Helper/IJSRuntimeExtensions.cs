@@ -8,12 +8,12 @@ namespace HiddenVilla_Server.Helper
 {
     public static class IJSRuntimeExtensions
     {
-        public static async ValueTask ToasterSeccess(this IJSRuntime JSRuntime, string message)
+        public static async ValueTask ToastrSeccess(this IJSRuntime JSRuntime, string message)
         {
             await JSRuntime.InvokeVoidAsync("ShowToastr", "success", message);
         }
 
-        public static async ValueTask ToasterError(this IJSRuntime JSRuntime, string message)
+        public static async ValueTask ToastrError(this IJSRuntime JSRuntime, string message)
         {
             await JSRuntime.InvokeVoidAsync("ShowToastr", "error", message);
         }
