@@ -59,7 +59,7 @@ namespace Business.Repository
             catch (Exception ex)
             {
                 return null;
-                
+                throw new InvalidOperationException(ex.Message);
             }
             
         }
@@ -75,8 +75,9 @@ namespace Business.Repository
             }
             catch (Exception ex)
             {
-
                 return null;
+                throw new InvalidOperationException(ex.Message);
+               
             }
         }
 
@@ -108,6 +109,7 @@ namespace Business.Repository
             {
 
                 return null;
+                throw new InvalidOperationException(ex.Message);
             }
         }
 
@@ -137,8 +139,9 @@ namespace Business.Repository
             }
             catch (Exception ex)
             {
-
                 return null;
+                throw new InvalidOperationException(ex.Message);
+                
             }
           
         }
