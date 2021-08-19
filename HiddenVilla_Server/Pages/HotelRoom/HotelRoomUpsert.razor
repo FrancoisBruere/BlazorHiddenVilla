@@ -40,6 +40,26 @@
                 </div>
                 <div class="form-group">
                     <InputFile OnChange="HandleImageUpload" multiple></InputFile>
+                    <div class="row">
+                        @if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Count > 0)
+                        {
+                            int serial = 1;
+
+                            foreach (var roomImage in HotelRoomModel.ImageUrls)
+                            {
+                                <div class="col-md-2 mt-3">
+                                    <div class="room-image" style="background: url('@roomImage') 50% 50%; "></div>
+                                    <span class="room-image-title">@serial</span>
+                                </div>
+
+                                <button type="button" class="btn btn-outline-danger btn-block mt-4">
+                                    Delete
+                                </button>
+                    
+                                serial++;
+                            }
+                        }
+                    </div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary">@Title Room</button>
@@ -140,7 +160,7 @@
                 }
 
             }
-            if (images.Any()) // imagelist should have something
+            if (images.Any()) // imagelist should have something // adding urls 
             {
                 if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any()) //check if any images in list
                 {
@@ -149,7 +169,7 @@
                 }
                 else
                 {
-                    // not then its the first upload and initialize the list then add
+                    // if not then its the first upload and initialize the list then add
                     HotelRoomModel.ImageUrls = new List<string>();
                     HotelRoomModel.ImageUrls.AddRange(images);
 
