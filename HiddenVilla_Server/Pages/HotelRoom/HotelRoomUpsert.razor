@@ -4,6 +4,7 @@
 @using Business.Repository.IRepository
 @using HiddenVilla_Server.Service.IService
 @inject IHotelRoomRepository HotelRoomRepository
+@inject IHotelImageRepository HotelImageRepository
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
 @inject IFileUpload FileUpload
@@ -79,6 +80,7 @@
 
     private HotelRoomDTO HotelRoomModel { get; set; } = new HotelRoomDTO();
     private string Title { get; set; } = "Create";
+    private HotelRoomImageDTO RoomImageModel { get; set; } = new HotelRoomImageDTO(); //for adding images
 
     protected override async Task OnInitializedAsync()
     {
@@ -87,6 +89,15 @@
             //updating
             Title = "Update";
             HotelRoomModel = await HotelRoomRepository.GetHotelRoom(Id.Value);
+
+            // images displayed on edit room
+
+            if (HotelRoomModel?.HotelRoomImages !=null)
+            {
+                HotelRoomModel.ImageUrls = HotelRoomModel.HotelRoomImages.Select(u => u.RoomImageUrl).ToList();
+            }
+
+
 
         }
         else
@@ -117,8 +128,9 @@
             }
             else
             {
-                // new create room
+                // new create room /add hotelroom images path
                 var createdResult = await HotelRoomRepository.CreateHotelRoom(HotelRoomModel); //pass DTO in form created to CreateHotelRoom method
+                await AddHotelRoomImage(createdResult); // for images calling local method 
                 await JsRuntime.ToastrSeccess("Hotel Room Created Successfully");
             }
 
@@ -190,4 +202,19 @@
         }
     }
 
+
+    private async Task AddHotelRoomImage(HotelRoomDTO roomDetails) // for image upload - save
+    {
+        foreach (var imageUrl in HotelRoomModel.ImageUrls)
+        {
+            RoomImageModel = new HotelRoomImageDTO()
+            {
+
+                RoomId = roomDetails.Id,
+                RoomImageUrl = imageUrl
+            };
+            await HotelImageRepository.CreateHotelRoomImage(RoomImageModel);
+
+        }
+    }
 }
