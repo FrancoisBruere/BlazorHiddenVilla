@@ -124,6 +124,15 @@
             {
                 // this is update
                 var updateResults = await HotelRoomRepository.UpdateHotelRoom(HotelRoomModel.Id, HotelRoomModel);
+                // adding additional images to a hotelroom
+
+                if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any())
+                {
+                    await AddHotelRoomImage(updateResults);
+                }
+
+
+
                 await JsRuntime.ToastrSeccess("Hotel Room Update Successfully");
             }
             else
@@ -205,15 +214,21 @@
 
     private async Task AddHotelRoomImage(HotelRoomDTO roomDetails) // for image upload - save
     {
+
         foreach (var imageUrl in HotelRoomModel.ImageUrls)
         {
-            RoomImageModel = new HotelRoomImageDTO()
+            if (HotelRoomModel.HotelRoomImages == null || HotelRoomModel.HotelRoomImages.Where(x => x.RoomImageUrl == imageUrl).Count()==0) //adds only new image/urls to DB
             {
+                RoomImageModel = new HotelRoomImageDTO()
+                {
 
-                RoomId = roomDetails.Id,
-                RoomImageUrl = imageUrl
-            };
-            await HotelImageRepository.CreateHotelRoomImage(RoomImageModel);
+                    RoomId = roomDetails.Id,
+                    RoomImageUrl = imageUrl
+                };
+                await HotelImageRepository.CreateHotelRoomImage(RoomImageModel);
+
+            }
+          
 
         }
     }
