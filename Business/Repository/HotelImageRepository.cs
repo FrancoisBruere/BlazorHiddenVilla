@@ -40,6 +40,18 @@ namespace Business.Repository
             return 0;
         }
 
+        public async Task<int> DeleteHotelRoomImageByImageUrl(string imageUrl)
+        {
+            var image = await _db.HotelRoomImages.FirstOrDefaultAsync(x => x.RoomImageUrl.ToLower() == imageUrl.ToLower());
+
+            if (image != null)
+            {
+                _db.HotelRoomImages.Remove(image);
+                return await _db.SaveChangesAsync();
+            }
+            return 0;
+        }
+
         public async Task<int> DeleteHotelRoomImageByRoomId(int roomId)
         {
             var imageList = await _db.HotelRoomImages.Where(x => x.RoomId==roomId).ToListAsync();

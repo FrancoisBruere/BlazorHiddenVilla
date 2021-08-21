@@ -81,6 +81,7 @@
     private HotelRoomDTO HotelRoomModel { get; set; } = new HotelRoomDTO();
     private string Title { get; set; } = "Create";
     private HotelRoomImageDTO RoomImageModel { get; set; } = new HotelRoomImageDTO(); //for adding images
+    private List<string> DeletedImageNames { get; set; } = new List<string>(); //edit keep track of images to be deleted
 
     protected override async Task OnInitializedAsync()
     {
@@ -126,8 +127,20 @@
                 var updateResults = await HotelRoomRepository.UpdateHotelRoom(HotelRoomModel.Id, HotelRoomModel);
                 // adding additional images to a hotelroom
 
-                if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any())
+                if ((HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any())
+                    || (DeletedImageNames != null && DeletedImageNames.Any()))
                 {
+                    if (DeletedImageNames != null && DeletedImageNames.Any()) // check if images to delete
+                    {
+                        foreach (var deletedImageName in DeletedImageNames)
+                        {
+                            var imageName = deletedImageName.Replace($"RoomImages/", "");
+
+                            var result = FileUpload.DeleteFile(imageName);
+                            await HotelImageRepository.DeleteHotelRoomImageByImageUrl(deletedImageName);
+
+                        }
+                    }
                     await AddHotelRoomImage(updateResults);
                 }
 
@@ -239,6 +252,7 @@
     {
         try
         {
+            //create
             var imageIndex = HotelRoomModel.ImageUrls.FindIndex(x => x == imageUrl); // find index of image
             var imageName = imageUrl.Replace($"RoomImages/", ""); // get the file name by replacing foler with nothing
 
@@ -249,7 +263,17 @@
                 var result = FileUpload.DeleteFile(imageName);
 
             }
+            else
+            {
+                //edit / update remove immages
+                DeletedImageNames ??= new List<string>();
+                DeletedImageNames.Add(imageUrl);
+
+
+            }
             HotelRoomModel.ImageUrls.RemoveAt(imageIndex);
+
+
 
         }
         catch (Exception ex)
