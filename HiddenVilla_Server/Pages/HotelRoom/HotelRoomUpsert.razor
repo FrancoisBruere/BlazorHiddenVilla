@@ -91,7 +91,7 @@
 
     private bool IsImageUploadProcessStarted { get; set; } = false;
 
-
+  
     protected override async Task OnInitializedAsync()
     {
         if (Id != null)
@@ -151,6 +151,7 @@
                         }
                     }
                     await AddHotelRoomImage(updateResults);
+                    
                 }
 
 
@@ -188,6 +189,7 @@
             var images = new List<string>();
             if (e.GetMultipleFiles().Count > 0)
             {
+
                 foreach (var file in e.GetMultipleFiles())
                 {
                     System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
@@ -195,8 +197,11 @@
                         fileInfo.Extension.ToLower() == ".png" ||
                         fileInfo.Extension.ToLower() == ".jpeg")
                     {
+
                         var uploadedImagePath = await FileUpload.UploadFile(file); //upload file into path / folder
                         images.Add(uploadedImagePath); // adds path to list images to be displayed to user as uploaded images 
+                        
+                        
                     }
                     else
                     {
@@ -295,4 +300,5 @@
 
     }
 
+  
 }

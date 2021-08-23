@@ -50,6 +50,7 @@ namespace HiddenVilla_Server.Service
 
                 var folderDirectory = $"{_webHostEnvironment.WebRootPath}\\RoomImages";
 
+                
                 var path = Path.Combine(_webHostEnvironment.WebRootPath, "RoomImages", fileName);
 
                 var memoryStream = new MemoryStream();
@@ -60,6 +61,7 @@ namespace HiddenVilla_Server.Service
                 if (!Directory.Exists(folderDirectory))
                 {
                     Directory.CreateDirectory(folderDirectory);
+                    
                 }
 
                 await using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
