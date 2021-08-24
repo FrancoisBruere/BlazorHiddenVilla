@@ -93,6 +93,8 @@
             HotelAmenityDTO AmenityDTO = await HotelAmenityRepository.GetHotelAmenity(deleteAmenityId.Value);
             await HotelAmenityRepository.DeleteHotelAmenity(deleteAmenityId.Value);
             await JsRuntime.ToastrSeccess("Amenity deleted successfully");
+            HotelAmenities = await HotelAmenityRepository.GetAllHotelAmenities();
+
         }
         await JsRuntime.InvokeVoidAsync("HideDeleteConfirmationModel");
         isProcessing = false;
