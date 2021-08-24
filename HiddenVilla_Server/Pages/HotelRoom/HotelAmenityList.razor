@@ -1,0 +1,71 @@
+﻿@page "/hotel-amenity"
+@using Models
+@using Business.Repository.IRepository
+@inject IHotelAmenityRepository HotelAmenityRepository
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">Hotel Amenities</h4>
+    </div>
+    <div class="col-3 offset-1">
+        <NavLink href="hotel-amenity/create" class="btn btn-info form-control">New Hotel Amenity</NavLink>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="bg-light">
+                    <th>Name</th>
+                    <th>Timing</th>
+                    <th>Icon</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @if (HotelAmenities.Any())
+                {
+                    foreach (var amenity in HotelAmenities)
+                    {
+                        <tr>
+                            <td>@amenity.Name</td>
+                            <td>@amenity.Timming</td>
+                            <td><i class="@amenity.Icon"></i></td>
+                            <td>
+                                <NavLink href="@($"hotel-amenity/edit/{ amenity.Id }")" class="btn btn-outline-info">Edit</NavLink>
+                                <button class="btn btn-outline-danger">Delete</button>
+
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            No records found
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+
+@code {
+
+    private IEnumerable<HotelAmenityDTO> HotelAmenities { get; set; } = new List<HotelAmenityDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        HotelAmenities = await HotelAmenityRepository.GetAllHotelAmenities();
+    }
+
+}
