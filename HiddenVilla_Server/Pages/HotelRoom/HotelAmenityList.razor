@@ -10,7 +10,7 @@
         <h4 class="card-title text-info">Hotel Amenities</h4>
     </div>
     <div class="col-3 offset-1">
-        <NavLink href="hotel-amenity/create" class="btn btn-info form-control">New Hotel Amenity</NavLink>
+        <NavLink href="hotel-amenity/create" class="btn btn-info form-control">New Amenity</NavLink>
     </div>
 </div>
 
@@ -20,8 +20,9 @@
             <thead>
                 <tr class="bg-light">
                     <th>Name</th>
-                    <th>Timing</th>
+                    <th>Timming</th>
                     <th>Icon</th>
+                    <th>Edit/Delete</th>
                 </tr>
 
             </thead>
@@ -36,7 +37,7 @@
                             <td><i class="@amenity.Icon"></i></td>
                             <td>
                                 <NavLink href="@($"hotel-amenity/edit/{ amenity.Id }")" class="btn btn-outline-info">Edit</NavLink>
-                                <button class="btn btn-outline-danger">Delete</button>
+                                <button @onclick="()=>HandleAmenityDelete(amenity.Id)" class="btn btn-outline-danger">Delete</button>
 
                             </td>
                         </tr>
@@ -57,15 +58,46 @@
     </div>
 </div>
 
-
+<DeleteConfirmation isParentProcessing="isProcessing" ConfirmationChanged="ConfirmDelete_Click"></DeleteConfirmation>
 
 @code {
 
     private IEnumerable<HotelAmenityDTO> HotelAmenities { get; set; } = new List<HotelAmenityDTO>();
+    private int? deleteAmenityId { get; set; } = null;
+    private bool isProcessing { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
         HotelAmenities = await HotelAmenityRepository.GetAllHotelAmenities();
     }
+
+
+    private async Task HandleAmenityDelete(int amenityId)
+    {
+        deleteAmenityId = amenityId;
+        if (deleteAmenityId != 0)
+        {
+
+            await JsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModel");
+        }
+
+
+    }
+
+    private async Task ConfirmDelete_Click(bool isConfirmed)
+    {
+        isProcessing = true;
+
+        if (isConfirmed && deleteAmenityId != 0)
+        {
+            HotelAmenityDTO AmenityDTO = await HotelAmenityRepository.GetHotelAmenity(deleteAmenityId.Value);
+            await HotelAmenityRepository.DeleteHotelAmenity(deleteAmenityId.Value);
+            await JsRuntime.ToastrSeccess("Amenity deleted successfully");
+        }
+        await JsRuntime.InvokeVoidAsync("HideDeleteConfirmationModel");
+        isProcessing = false;
+
+    }
+
 
 }

@@ -70,20 +70,43 @@
     }
 
 
+
     public async Task HandleHotelAmenityUpsert()
     {
         var amenityDetailsByName = await HotelAmenityRepository.IsAmenityUnique(HotelAmenityModel.Name, HotelAmenityModel.Id);
 
         if (amenityDetailsByName != null)
         {
-            await JsRuntime.ToastrError("Duplicate Amenity");
+            await JsRuntime.ToastrError("Amenity name exist");
             return;
         }
-        else
+        try
         {
-            var createdResults = await HotelAmenityRepository.CreateHotelAmenity(HotelAmenityModel);
-            NavigationManager.NavigateTo("hotel-amenity");
+            if (HotelAmenityModel.Id != 0 && Title == "Update")
+            {
+                // update
+
+                var updatedResult = await HotelAmenityRepository.UpdateHotelAmenity(HotelAmenityModel.Id, HotelAmenityModel);
+                await JsRuntime.ToastrSeccess("Amenity updated successfully");
+            }
+            else
+            {
+                //create
+                var createdResults = await HotelAmenityRepository.CreateHotelAmenity(HotelAmenityModel);
+                await JsRuntime.ToastrSeccess("Amenity created successfully");
+                
+            }
+
+
         }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+        NavigationManager.NavigateTo("hotel-amenity");
+
 
     }
 }

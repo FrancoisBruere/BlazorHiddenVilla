@@ -75,9 +75,22 @@ namespace Business.Repository
         {
             try
             {
-                HotelAmenityDTO hotelAmenity = _mapper.Map<HotelAmenity, HotelAmenityDTO>
-                    (await _db.HotelAmenities.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower()));
-                return hotelAmenity;
+                if (amenityId == 0)
+                {
+                    //update
+
+                    HotelAmenityDTO hotelAmenity = _mapper.Map<HotelAmenity, HotelAmenityDTO>
+                   (await _db.HotelAmenities.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower()));
+                    return hotelAmenity;
+                }
+                else
+                {
+                    //create
+                    HotelAmenityDTO hotelAmenity = _mapper.Map<HotelAmenity, HotelAmenityDTO>
+                  (await _db.HotelAmenities.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower() && x.Id != amenityId));
+                    return hotelAmenity;
+                }
+               
             }
             catch (Exception ex)
             {
