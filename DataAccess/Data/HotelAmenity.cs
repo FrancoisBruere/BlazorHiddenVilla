@@ -17,7 +17,10 @@ namespace DataAccess.Data
         public string Description { get; set; }
         public string Timming { get; set; }
         public string Icon { get; set; }
-       
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public string UpdatedBy { get; set; }
+        public DateTime UpdatedDate { get; set; }
 
 
     }
