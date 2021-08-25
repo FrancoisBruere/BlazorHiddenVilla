@@ -3,6 +3,7 @@
 @using Business.Repository.IRepository
 @inject IHotelRoomRepository HotelRoomRepository
 @inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
 @inject HiddenVilla_Server.Service.IService.IFileUpload FileUpload
 
 <div class="row mt-4">
@@ -99,7 +100,7 @@
             HotelRoomDTO hotelRoom = await HotelRoomRepository.GetHotelRoom(DeleteRoomId.Value);
             foreach (var image in hotelRoom.HotelRoomImages)
             {
-                var imageName = image.RoomImageUrl.Replace($"RoomImages/", "");
+                var imageName = image.RoomImageUrl.Replace($"{NavigationManager.BaseUri}RoomImages/", "");
                 FileUpload.DeleteFile(imageName);
             }
 
