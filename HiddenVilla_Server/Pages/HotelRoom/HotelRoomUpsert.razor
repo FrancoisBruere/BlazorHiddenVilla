@@ -8,6 +8,7 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
 @inject IFileUpload FileUpload
+@*@attribute [Authorize]*@
 
 <div class="row mt-2 mb-5">
     <h3 class="card-title text-info md-3 ml-1 col-12">@Title Hotel Room</h3>
@@ -125,9 +126,14 @@
 
     private bool IsImageUploadProcessStarted { get; set; } = false;
 
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
+        
+
         if (Id != null)
         {
             //updating

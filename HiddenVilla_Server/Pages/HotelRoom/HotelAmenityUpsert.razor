@@ -5,6 +5,7 @@
 @inject IHotelAmenityRepository HotelAmenityRepository
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
+@attribute [Authorize]
 
 <div class="row mt-2 mb-5">
     <h3 class="card-title text-info md-3 ml-1 col-12">@Title Hotel Amenity</h3>
@@ -19,9 +20,9 @@
                     <ValidationMessage For="()=>HotelAmenityModel.Name" />
                 </div>
                 <div class="form-group">
-                <label>Description</label>
-                <InputTextArea @bind-Value="HotelAmenityModel.Description" class="form-control"></InputTextArea>
-                <ValidationMessage For="()=>HotelAmenityModel.Description" />
+                    <label>Description</label>
+                    <InputTextArea @bind-Value="HotelAmenityModel.Description" class="form-control"></InputTextArea>
+                    <ValidationMessage For="()=>HotelAmenityModel.Description" />
                 </div>
                 <div class="form-group">
                     <label>Timming</label>
@@ -29,8 +30,8 @@
                     <ValidationMessage For="()=>HotelAmenityModel.Timming" />
                 </div>
                 <div class="form-group">
-                <label>Icon Style</label>
-                <InputText @bind-Value="HotelAmenityModel.Icon" class="form-control"></InputText>
+                    <label>Icon Style</label>
+                    <InputText @bind-Value="HotelAmenityModel.Icon" class="form-control"></InputText>
                 </div>
 
                 <div class="form-group">
@@ -94,7 +95,7 @@
                 //create
                 var createdResults = await HotelAmenityRepository.CreateHotelAmenity(HotelAmenityModel);
                 await JsRuntime.ToastrSeccess("Amenity created successfully");
-                
+
             }
 
 
