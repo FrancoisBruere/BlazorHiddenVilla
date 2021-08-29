@@ -1,0 +1,98 @@
+﻿@page "/hotel-administration"
+@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<IdentityUser> _UserManager
+@inject RoleManager<IdentityRole> _RoleManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize(Roles = Common.SD.Role_Admin)]
+
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">Hotel Administration</h4>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="bg-light">
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Email Confirmed</th>
+                    <th>Edit/Delete</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @if (UsersList.Any())
+                {
+                    foreach (var user in UsersList)
+                    {
+                <tr>
+
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.EmailConfirmed</td>
+                    <td>
+
+                        <NavLink href="@($"hotel-administration/edit/{ user.Id }")" class="btn btn-outline-info">Edit</NavLink>
+                        <button class="btn btn-outline-danger">Delete</button>
+
+                    </td>
+                </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            No records found
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+
+@code {
+
+    List<IdentityUser> UsersList = new List<IdentityUser>();
+    List<IdentityRole> UserRolesList = new List<IdentityRole>();
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        HandleGetAllUsers();
+
+    }
+
+    public void HandleGetAllUsers()
+    {
+        if(UsersList.Count == 0)
+            UsersList = new List<IdentityUser>();
+
+        var user = _UserManager.Users.Select(x => new IdentityUser
+        {
+
+            UserName = x.UserName,
+            Email = x.Email,
+            PhoneNumber = x.PhoneNumber,
+            EmailConfirmed = x.EmailConfirmed
+        });
+
+        foreach (var item in user)
+        {
+            UsersList.Add(item);
+        }
+
+    }
+}
