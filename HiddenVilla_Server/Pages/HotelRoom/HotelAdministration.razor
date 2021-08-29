@@ -37,8 +37,8 @@
                     <td>@user.EmailConfirmed</td>
                     <td>
 
-                        <NavLink href="@($"hotel-administration/edit/{ user.Id }")" class="btn btn-outline-info">Edit</NavLink>
-                        <button class="btn btn-outline-danger">Delete</button>
+                        @*<NavLink href="@($"hotel-administration/edit/{ user.Id }")" class="btn btn-outline-info">Edit</NavLink>*@
+                        <button class="btn btn-outline-danger" @onclick="()=>HandleDeleteUser(user.Id)">Delete</button>
 
                     </td>
                 </tr>
@@ -64,25 +64,25 @@
 @code {
 
     List<IdentityUser> UsersList = new List<IdentityUser>();
-    List<IdentityRole> UserRolesList = new List<IdentityRole>();
-
-
+   
+    private string _DeleteUserId { get; set; } = null;
+    private bool isProcessing { get; set; } = false;
 
 
     protected override async Task OnInitializedAsync()
     {
         HandleGetAllUsers();
-
+        StateHasChanged();
     }
 
     public void HandleGetAllUsers()
     {
-        if(UsersList.Count == 0)
+        if(UsersList.Count != 0)
             UsersList = new List<IdentityUser>();
 
         var user = _UserManager.Users.Select(x => new IdentityUser
         {
-
+            Id = x.Id,
             UserName = x.UserName,
             Email = x.Email,
             PhoneNumber = x.PhoneNumber,
@@ -92,7 +92,26 @@
         foreach (var item in user)
         {
             UsersList.Add(item);
+
         }
 
     }
+
+    private async Task HandleDeleteUser(string deleteId)
+    {
+        _DeleteUserId = deleteId;
+        isProcessing = true;
+        var user = await _UserManager.FindByIdAsync(deleteId);
+        if (user != null && isProcessing == true)
+        {
+            // Delete the user
+            await _UserManager.DeleteAsync(user);
+            
+        }
+
+        isProcessing = false;
+        HandleGetAllUsers();
+
+    }
+
 }
