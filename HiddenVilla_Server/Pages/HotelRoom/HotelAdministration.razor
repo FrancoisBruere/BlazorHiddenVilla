@@ -61,10 +61,10 @@
         </table>
     </div>
 </div>
-
+<hr />
 <div class="row mt-4">
     <div class="col-8">
-        <h3>Role</h3>
+        <h3>Roles</h3>
     </div>
     <div class="col-3 offset-1">
         <NavLink href="hotel-administration/create" class="btn btn-info form-control">New Role</NavLink>
@@ -77,6 +77,7 @@
             <thead>
                 <tr class="bg-light">
                     <th>Name</th>
+                    <th>Edit/Delete</th>
                 </tr>
 
             </thead>
@@ -89,7 +90,7 @@
 
                             <td>@role.Name</td>
                             <td>
-                                <button class="btn btn-outline-danger">Delete</button>
+                                <button class="btn btn-outline-danger" @onclick="()=>HandleRoleDelete(role.Id)">Delete</button>
                             </td>
                         </tr>
                     }
@@ -117,6 +118,7 @@
     List<IdentityRole> RolesList = new List<IdentityRole>();
 
     private string DeleteUserId { get; set; } = null;
+    private string DeleteRoleId { get; set; } = null;
     private bool isProcessing { get; set; } = false;
 
 
@@ -173,14 +175,30 @@
         DeleteUserId = deleteId;
         await JsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModel");
 
-        //will call confirmdelete_click from modelpopup
+    }
+
+    private async Task HandleRoleDelete(string deleteId)
+    {
+        DeleteRoleId = deleteId;
+        await JsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModel");
+
     }
 
     private async Task ConfirmDelete_Click(bool isConfirmed)
     {
-        
+
         isProcessing = true;
+        var role = await _RoleManager.FindByIdAsync(DeleteRoleId);
         var user = await _UserManager.FindByIdAsync(DeleteUserId);
+
+        if (role != null && isProcessing == true)
+        {
+            await JsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModel");
+            await _RoleManager.DeleteAsync(role);
+            await JsRuntime.ToastrSeccess("Hotel Room Deleted successfully");
+        }
+
+
         if (user != null && isProcessing == true)
         {
             // Delete the user
@@ -192,6 +210,8 @@
         await JsRuntime.InvokeVoidAsync("HideDeleteConfirmationModel");
         isProcessing = false;
         HandleGetAllUsers();
+        HandleGetRoles();
+
 
     }
 
