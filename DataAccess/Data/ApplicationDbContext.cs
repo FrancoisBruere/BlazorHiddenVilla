@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -19,6 +19,8 @@ namespace DataAccess.Data
         public DbSet<HotelRoomImage> HotelRoomImages { get; set; }
 
         public DbSet<HotelAmenity> HotelAmenities { get; set; }
+
+        
 
     }
 }
