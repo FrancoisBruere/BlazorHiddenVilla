@@ -106,9 +106,11 @@ namespace HiddenVilla_Api
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("HiddenVilla");
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             
 
