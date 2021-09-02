@@ -1,4 +1,6 @@
 ﻿using Business.Repository.IRepository;
+using Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -19,7 +21,7 @@ namespace HiddenVilla_Api.Controllers
         {
             this._hotelRoomRepository = hotelRoomRepository;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> GetHotelRooms()
         {
