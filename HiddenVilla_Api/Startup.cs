@@ -1,6 +1,7 @@
 using Business.Repository;
 using Business.Repository.IRepository;
 using DataAccess.Data;
+using HiddenVilla_Api.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,13 @@ namespace HiddenVilla_Api
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            //config API settings
+
+            var appSettingSection = Configuration.GetSection("APISettings");
+            services.Configure<APISettings>(appSettingSection);
+
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IHotelRoomRepository, HotelRoomRepository>();
