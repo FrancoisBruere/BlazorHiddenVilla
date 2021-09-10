@@ -3,7 +3,7 @@
 
 @using HiddenVilla_Client.Model.ViewModel
 
-
+@inject IHotelAmenityService hotelAmenityService
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject IJSRuntime JsRuntime
 @inject NavigationManager navigationManager
@@ -55,11 +55,11 @@
             </div>
         </div>
 
-        <div class="col-4 col-md-2 p-0 pr-2">
+        <div class="col-2 col-md-2 p-0 pr-2">
             <div class="form-group">
                 <label>&nbsp;</label>
 
-                <input type="submit" value="Go" class="btn btn-success btn-lg btn-block" />
+                <input type="submit" value="Go" class="btn btn-success btn-block" />
 
             </div>
         </div>
@@ -67,11 +67,44 @@
     </div>
 </EditForm>
 
+<hr />
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h2 class="text-warning">Explore our Amenities</h2>
+            <p class="lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var amenity in Amenities)
+        {
+            <div class="col-md-4 col-6 p-4">
+                <div style="border:1px solid #d5d5d5; border-radius:20px;">
+                    <div class="row col-4 offset-4 p-4">
+                        <i class="@amenity.Icon fa-4x"></i>
+                    </div>
+                    <div class="text-center justify-content-center">
+                        <h5 class="text-warning">@amenity.Name</h5>
+                        <p>@amenity.Description</p>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
 @code{
 
 
     public HomeVM HomeModel { get; set; } = new HomeVM();
+    public IEnumerable<HotelAmenityDTO> Amenities { get; set; } = new List<HotelAmenityDTO>();
 
+    protected async override Task OnInitializedAsync()
+    {
+        Amenities = await hotelAmenityService.GetHotelAmenities();
+    }
 
     private async Task SaveInitialData()
     {
