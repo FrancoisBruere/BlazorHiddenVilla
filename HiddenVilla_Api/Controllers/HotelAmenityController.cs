@@ -18,5 +18,14 @@ namespace HiddenVilla_Api.Controllers
             _hotelAmenityRepository = hotelAmenityRepository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetHotelAmenities()
+        {
+            var allAmenities = await _hotelAmenityRepository.GetAllHotelAmenities();
+            return Ok(allAmenities);
+
+
+        }
+
     }
 }
