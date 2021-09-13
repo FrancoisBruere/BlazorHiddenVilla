@@ -23,7 +23,7 @@ namespace DataAccess.Data
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-
+        public DbSet<RoomOrderDetails> RoomOrderDetails { get; set; }
 
     }
 }
