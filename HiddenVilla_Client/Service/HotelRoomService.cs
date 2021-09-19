@@ -19,9 +19,22 @@ namespace HiddenVilla_Client.Service
             _client = client;
         }
 
-        public Task<HotelRoomDTO> GetHotelRoomDetails(int roomId, string checkInDate, string checkOutDate)
+        public async Task<HotelRoomDTO> GetHotelRoomDetails(int roomId, string checkInDate, string checkOutDate)
         {
-            throw new NotImplementedException();
+            var responce = await _client.GetAsync($"api/HotelRoom/{roomId}?checkInDate={checkInDate}&checkOutDate={checkOutDate}");
+            if (responce.IsSuccessStatusCode)
+            {
+                var content = await responce.Content.ReadAsStringAsync();
+                var room = JsonConvert.DeserializeObject<HotelRoomDTO>(content);
+                return room;
+            }
+            else
+            {
+                var content = await responce.Content.ReadAsStringAsync();
+                var errorModel = JsonConvert.DeserializeObject<ErrorModel>(content);
+                throw new Exception(errorModel.ErrorMessage);
+            }
+            
         }
 
         public async Task<IEnumerable<HotelRoomDTO>> GetHotelRooms(string checkInDate, string checkOutDate)
