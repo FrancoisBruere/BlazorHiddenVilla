@@ -13,7 +13,7 @@ namespace Models
         public int Id { get; set; }
 
         [Required]
-        public string UserId { get; set; } // wibb be string as useid is a guid
+        public string UserId { get; set; } // will be string as useid is a guid
 
         [Required]
         public string StripeSessionId { get; set; } // for stripe payment
@@ -29,7 +29,7 @@ namespace Models
         public DateTime ActualCheckOutDate { get; set; }
 
         [Required]
-        public long TotalCost { get; set; }
+        public double TotalCost { get; set; }
 
         [Required]
         public int RoomId { get; set; }

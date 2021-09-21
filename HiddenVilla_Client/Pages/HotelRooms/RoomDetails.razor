@@ -5,6 +5,8 @@
 @inject IJSRuntime jsRuntime
 @inject ILocalStorageService localStorage
 @inject IHotelRoomService hoteRoomService
+@inject IStripePaymentService stripePaymentService
+@inject IRoomOrderDetailService roomOrderDetailService
 
 @if (HotelBooking?.OrderDetails?.HotelRoomDTO?.HotelRoomImages == null)
 {
@@ -194,6 +196,36 @@ else
         if (!await HandleValidation())
         {
             return;
+        }
+
+        try
+        {
+            var paymentDTO = new StripePaymentDTO()
+            {
+
+                Amount = Convert.ToInt32(HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount * 100),
+                ProductName = HotelBooking.OrderDetails.HotelRoomDTO.Name,
+                ReturnUrl = "/hote/room-details/" + Id
+            };
+
+            var result = await stripePaymentService.CheckOut(paymentDTO);
+
+            HotelBooking.OrderDetails.StripeSessionId = result.Data.ToString();
+            HotelBooking.OrderDetails.RoomId = HotelBooking.OrderDetails.HotelRoomDTO.Id; //make sure everything in order details is populated
+            HotelBooking.OrderDetails.TotalCost = HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount;
+
+            var roomOrderDetailSaved = await roomOrderDetailService.SaveRoomOrderDetails(HotelBooking.OrderDetails);
+
+            await localStorage.SetItemAsync(SD.Local_RoomOrderDetails, roomOrderDetailSaved); // save to localstorage
+
+            // next redirect to stipe session
+            await jsRuntime.InvokeVoidAsync("redirectToCheckout", result.Data.ToString());
+
+        }
+        catch (Exception e)
+        {
+
+            await jsRuntime.ToastrError(e.Message);
         }
 
     }

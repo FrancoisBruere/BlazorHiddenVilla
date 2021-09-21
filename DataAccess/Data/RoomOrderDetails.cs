@@ -30,7 +30,7 @@ namespace DataAccess.Data
         public DateTime ActualCheckOutDate { get; set; }
 
         [Required]
-        public long TotalCost { get; set; }
+        public double TotalCost { get; set; }
 
         [Required]
         public int RoomId { get; set; }
