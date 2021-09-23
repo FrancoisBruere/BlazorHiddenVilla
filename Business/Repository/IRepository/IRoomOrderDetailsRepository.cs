@@ -19,6 +19,6 @@ namespace Business.Repository.IRepository
 
         public Task<bool> UpdateRoomOrderStatus(int roomOrderId, string status);
 
-        public Task<bool> IsRoomBooked(int RoomId, DateTime checkInDate, DateTime checkOutDate);
+        
     }
 }

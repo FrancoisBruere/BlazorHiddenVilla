@@ -64,8 +64,15 @@ namespace Business.Repository
             {
                IEnumerable<HotelRoomDTO> hotelRoomDTOs = 
                  _mapper.Map<IEnumerable<HotelRoom>, IEnumerable<HotelRoomDTO>>(_db.HotelRooms.Include(x=>x.HotelRoomImages));
+                
+                if (!string.IsNullOrEmpty(checkInDateStr) && !string.IsNullOrEmpty(checkOutDateStr))
+                {   foreach (HotelRoomDTO hotelRoom in hotelRoomDTOs)
 
-               return hotelRoomDTOs;
+                        hotelRoom.isBooked = await IsRoomBooked(hotelRoom.Id, checkInDateStr, checkOutDateStr);
+
+                }
+
+                return hotelRoomDTOs;
             }
             catch (Exception ex)
             {
@@ -81,6 +88,12 @@ namespace Business.Repository
             {
                 HotelRoomDTO hotelRoom = _mapper.Map<HotelRoom,HotelRoomDTO>(
                     await _db.HotelRooms.Include(x=>x.HotelRoomImages).FirstOrDefaultAsync(x=> x.Id == roomId));
+
+                if (!string.IsNullOrEmpty(checkInDateStr) && !string.IsNullOrEmpty(checkOutDateStr))
+                {
+                    hotelRoom.isBooked = await IsRoomBooked(roomId, checkInDateStr, checkOutDateStr);
+                }
+
                 return hotelRoom;
                 
             }
@@ -122,6 +135,41 @@ namespace Business.Repository
                 return null;
                 throw new InvalidOperationException(ex.Message);
             }
+        }
+
+        public async Task<bool> IsRoomBooked(int RoomId, string checkInDatestr, string checkOutDatestr)
+        {
+
+            try
+            {
+                if (!string.IsNullOrEmpty(checkOutDatestr) && !string.IsNullOrEmpty(checkInDatestr))
+                {
+                    DateTime checkInDate = DateTime.ParseExact(checkInDatestr, "MM/dd/yyyy", null);
+                    DateTime checkOutDate = DateTime.ParseExact(checkOutDatestr, "MM/dd/yyyy", null);
+
+                    var existingBooking = await _db.RoomOrderDetails.Where(x => x.RoomId == RoomId && x.IsPaymentSuccessful &&
+                    // check if checkin date that user wants does not fall between any dates that is already booked
+                    ((checkInDate < x.CheckOutDate && checkInDate.Date >= x.CheckInDate)
+                    // check if checkout date that user wants does not fall between dates that is already booked
+                    || (checkOutDate.Date > x.CheckInDate.Date && checkInDate.Date <= x.CheckInDate.Date))).FirstOrDefaultAsync();
+
+                    if (existingBooking !=null)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public async Task<HotelRoomDTO> UpdateHotelRoom(int roomId, HotelRoomDTO hotelRoomDTO)

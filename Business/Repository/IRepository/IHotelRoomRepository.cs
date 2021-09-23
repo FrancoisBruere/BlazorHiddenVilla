@@ -21,6 +21,8 @@ namespace Business.Repository.IRepository
 
         public Task<HotelRoomDTO> IsRoomUnique(string name, int roomId=0);
 
+        public Task<bool> IsRoomBooked(int RoomId, string checkInDate, string checkOutDate);
+
 
     }
 }
