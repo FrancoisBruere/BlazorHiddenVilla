@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HiddenVilla_Client.Service
+namespace HiddenVilla_Client.Service.IService
 {
     public interface IAuthenticationService
     {
@@ -12,7 +12,5 @@ namespace HiddenVilla_Client.Service
         Task<RegistrationResponceDTO> RegisterUser(UserRequestDTO userForRegistration);
         Task<AuthenticationResponseDTO> Login(AuthenticationDTO userForAuthentication);
         Task Logout();
-
-
     }
 }

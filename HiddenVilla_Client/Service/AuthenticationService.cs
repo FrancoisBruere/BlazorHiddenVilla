@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Common;
+using HiddenVilla_Client.Service.IService;
 using Models;
 using Newtonsoft.Json;
 using System;
@@ -27,7 +28,7 @@ namespace HiddenVilla_Client.Service
         {
             var content = JsonConvert.SerializeObject(userForAuthentication);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responce = await _client.PostAsync("api/accountcontroller/signin", bodyContent);
+            var responce = await _client.PostAsync("api/account/signin", bodyContent);
 
             var contentTemp = await responce.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AuthenticationResponseDTO>(contentTemp);
@@ -64,7 +65,8 @@ namespace HiddenVilla_Client.Service
         {
             var content = JsonConvert.SerializeObject(userForRegistration);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responce = await _client.PostAsync("api/accountcontroller/signup", bodyContent);
+            var responce = await _client.PostAsync("api/account/signup", bodyContent);
+           
 
             var contentTemp = await responce.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<RegistrationResponceDTO>(contentTemp);
