@@ -12,6 +12,6 @@ namespace Models
         public int StatusCode { get; set; }
         public string SuccessMessage { get; set; }
 
-        public object Data { get; set; } // if any generic random date will be in this object
+        public object Data { get; set; } // if any generic random date will be in this object - stripe
     }
 }
