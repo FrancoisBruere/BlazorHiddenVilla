@@ -1,8 +1,11 @@
 ﻿@page "/success-payment"
+
+@using Microsoft.AspNetCore.Authorization
+
 @inject ILocalStorageService localStorage
 @inject IRoomOrderDetailService roomOrderDetailService
 
-
+@attribute [Authorize(Roles = SD.Role_Customer)]
 <div class="container">
 
     @if (!IsPaymentComplete)
@@ -32,28 +35,28 @@
 
 
 
-    @code {
+@code {
 
-        public bool IsPaymentComplete { get; set; } = false;
-        public int OrderId { get; set; }
+    public bool IsPaymentComplete { get; set; } = false;
+    public int OrderId { get; set; }
 
 
-        protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
+    {
+        var orderDetails = await localStorage.GetItemAsync<RoomOrderDetailsDTO>(SD.Local_RoomOrderDetails);
+        OrderId = orderDetails.Id;
+
+        var finalRoomOrderDetails = await roomOrderDetailService.MarkPaymentSuccessful(orderDetails);
+
+        if (finalRoomOrderDetails.Status == SD.Status_Booked)
         {
-            var orderDetails = await localStorage.GetItemAsync<RoomOrderDetailsDTO>(SD.Local_RoomOrderDetails);
-            OrderId = orderDetails.Id;
+            IsPaymentComplete = true;
+            await localStorage.RemoveItemAsync(SD.Local_RoomOrderDetails); // clear local storage
+            await localStorage.RemoveItemAsync(SD.Local_InitialBooking);
 
-            var finalRoomOrderDetails = await roomOrderDetailService.MarkPaymentSuccessful(orderDetails);
-
-            if (finalRoomOrderDetails.Status == SD.Status_Booked)
-            {
-                IsPaymentComplete = true;
-                await localStorage.RemoveItemAsync(SD.Local_RoomOrderDetails); // clear local storage
-                await localStorage.RemoveItemAsync(SD.Local_InitialBooking);
-                
-
-            }
 
         }
+
+    }
 
 }

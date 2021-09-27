@@ -1,12 +1,14 @@
 ﻿@page "/hotel/room-details/{Id:int}"
 
 @using Microsoft.AspNetCore.Components
-
+@using Microsoft.AspNetCore.Authorization
 @inject IJSRuntime jsRuntime
 @inject ILocalStorageService localStorage
 @inject IHotelRoomService hoteRoomService
 @inject IStripePaymentService stripePaymentService
 @inject IRoomOrderDetailService roomOrderDetailService
+
+@attribute [Authorize(Roles =SD.Role_Customer)]
 
 @if (HotelBooking?.OrderDetails?.HotelRoomDTO?.HotelRoomImages == null)
 {
@@ -173,6 +175,16 @@ else
                     HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount = HotelBooking.OrderDetails.HotelRoomDTO.RegularRate;
 
                 }
+            }
+
+            if (await localStorage.GetItemAsync<UserDTO>(SD.Local_UserDetails)!=null) //populate booking form with loged in user details
+            {
+                var userInfo = await localStorage.GetItemAsync<UserDTO>(SD.Local_UserDetails);
+                HotelBooking.OrderDetails.UserId = userInfo.Id;
+                HotelBooking.OrderDetails.Name = userInfo.Name;
+                HotelBooking.OrderDetails.Email = userInfo.Email;
+                HotelBooking.OrderDetails.PhoneNo = userInfo.PhoneNo;
+
             }
 
         }
