@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Common;
 using HiddenVilla_Client.Service.IService;
+using Microsoft.AspNetCore.Components.Authorization;
 using Models;
 using Newtonsoft.Json;
 using System;
@@ -18,11 +19,14 @@ namespace HiddenVilla_Client.Service
 
         private readonly HttpClient _client;
         private readonly ILocalStorageService _localStorage;
+        private readonly AuthenticationStateProvider _authStateProvider;
 
-        public AuthenticationService(HttpClient client, ILocalStorageService localStorage)
+
+        public AuthenticationService(HttpClient client, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider)
         {
             _client = client;
             _localStorage = localStorage;
+            _authStateProvider = authStateProvider;
         }
         public async Task<AuthenticationResponseDTO> Login(AuthenticationDTO userForAuthentication)
         {
@@ -38,6 +42,8 @@ namespace HiddenVilla_Client.Service
                 //user details to local storage
                 await _localStorage.SetItemAsync(SD.Local_Token, result.Token);
                 await _localStorage.SetItemAsync(SD.Local_UserDetails, result.UserDTO);
+                ((AuthStateProvider)_authStateProvider).NotifyUserLoggedIn(result.Token);//convert Authstate and call notifyUSerlogin
+                ((AuthStateProvider)_authStateProvider).NotifyUserLoggedIn(result.Token);//convert Authstate and call notifyUSerlogin
 
                 //add bearer token
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
@@ -56,7 +62,7 @@ namespace HiddenVilla_Client.Service
             //remove token and user details
             await _localStorage.RemoveItemAsync(SD.Local_Token);
             await _localStorage.RemoveItemAsync(SD.Local_UserDetails);
-
+            ((AuthStateProvider)_authStateProvider).NotifyUserLogout(); //convert Authstate and call notifyUSerlogout
             //set auth to null
             _client.DefaultRequestHeaders.Authorization = null;
         }

@@ -34,5 +34,18 @@ namespace HiddenVilla_Client.Service
             _httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token); //add bearer token to http client
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType")));
         }
+
+        public void NotifyUserLoggedIn( string token)
+        {
+            var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType"));
+            var authState = Task.FromResult(new AuthenticationState(authenticatedUser)); // creating new authentication state and pass claims token
+            NotifyAuthenticationStateChanged(authState);
+        }
+
+        public void NotifyUserLogout()
+        {
+            var authState = Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))); // set auth state to new and will clear existing auth state
+            NotifyAuthenticationStateChanged(authState);
+        }
     }
 }
