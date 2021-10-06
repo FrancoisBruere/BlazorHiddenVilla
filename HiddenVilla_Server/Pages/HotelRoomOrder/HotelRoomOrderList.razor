@@ -6,14 +6,15 @@
 @inject IRoomOrderDetailsRepository RoomOrderDetailRepository
 @inject IJSRuntime jsRuntime
 @inject NavigationManager navigationManager
+@attribute [Authorize(Roles = Common.SD.Role_Admin)]
 
 
 @if (!isLoading)
 {
     <h4 class="card-title text-info">Hotel Room Order's</h4>
 
-    <RadzenDataGrid AllowFiltering="true" 
-                    AllowColumnResize="true" 
+    <RadzenDataGrid AllowFiltering="true"
+                    AllowColumnResize="true"
                     FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
                     Data="@HotelRoomOrders" TItem="RoomOrderDetailsDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
         <Columns>
@@ -24,10 +25,10 @@
             <RadzenDataGridColumn TItem="RoomOrderDetailsDTO" Property="Status" Filterable="false" Title="Status" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
             <RadzenDataGridColumn TItem="RoomOrderDetailsDTO" Property="CheckInDate" Filterable="false" Title="Check in Date" Frozen="true" Width="70px" TextAlign="TextAlign.Center">
                 <Template Context="data">
-                    @string.Format("{0:d/M/yyyy }",data.CheckInDate)
+                    @string.Format("{0:d/M/yyyy }", data.CheckInDate)
                 </Template>
             </RadzenDataGridColumn>
-           
+
             <RadzenDataGridColumn TItem="RoomOrderDetailsDTO" Property="Id" Title="">
 
                 <Template Context="data">
