@@ -53,6 +53,7 @@ namespace HiddenVilla_Server.Service
 
             IdentityUser user = _db.Users.FirstOrDefault(u => u.Email == "admin@123.com");
             _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
+            _userManager.AddToRoleAsync(user, SD.Role_Customer).GetAwaiter().GetResult();
 
         }
     }
