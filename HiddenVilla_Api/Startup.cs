@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +47,9 @@ namespace HiddenVilla_Api
             var appSettingSection = Configuration.GetSection("APISettings");
             services.Configure<APISettings>(appSettingSection);
 
+            
+            services.Configure<MailJetSettings>(Configuration.GetSection("MailJetSettings"));
+
             var apiSettings = appSettingSection.Get<APISettings>(); // pupulate key
             var key = Encoding.ASCII.GetBytes(apiSettings.SecretKey);
 
@@ -76,6 +80,7 @@ namespace HiddenVilla_Api
             services.AddScoped<IHotelImageRepository, HotelImageRepository>();
             services.AddScoped<IRoomOrderDetailsRepository, RoomOrderDetailsRepository>();
             services.AddScoped<IHotelAmenityRepository, HotelAmenityRepository>();
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddCors(o => o.AddPolicy("HiddenVilla", builder =>
               {

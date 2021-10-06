@@ -440,15 +440,7 @@ legend + * {
     clear: left;
 }
 
-::-webkit-datetime-edit-fields-wrapper,
-::-webkit-datetime-edit-text,
-::-webkit-datetime-edit-minute,
-::-webkit-datetime-edit-hour-field,
-::-webkit-datetime-edit-day-field,
-::-webkit-datetime-edit-month-field,
-::-webkit-datetime-edit-year-field {
-    padding: 0;
-}
+
 
 ::-webkit-inner-spin-button {
     height: auto;
@@ -2393,7 +2385,7 @@ progress {
 
 .form-control:focus {
     color: #212529;
-    background-color: #060606;
+    background-color: white;
     border-color: #95cfeb;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(42, 159, 214, 0.25);
