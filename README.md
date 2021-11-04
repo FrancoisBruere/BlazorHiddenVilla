@@ -19,5 +19,5 @@ HotelClient - WASM
 - Display available rooms only 
 - Booking functionality - pre populating registered user information on booking form - local starage
 - Checkout route to stripe payment gateway and back to booking confirmation screen with confirmation email confirming booking email via mailjet.
-
+- Toastr Alerts
 
