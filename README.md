@@ -1,7 +1,7 @@
 # BlazorHiddenVilla
 Complete Blazor hotel Room Management and booking system
 
-SQL Server DB Code First
+SQL Server DB Code First .Net 5
 
 HotelServer:
 - Manage rooms CRUD, upload room images CRUD, manage hotel amenities CRUD, Manage and confirm bookings cancelations and no show. 
