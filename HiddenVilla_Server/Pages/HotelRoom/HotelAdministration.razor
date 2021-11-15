@@ -25,7 +25,7 @@
                     <th>Email</th>
                     <th>Phone Number</th>
                     <th>Email Confirmed</th>
-                    <th>Edit/Delete</th>
+                    
                 </tr>
 
             </thead>
@@ -42,7 +42,7 @@
                             <td>@user.EmailConfirmed</td>
                             <td>
                                 @*<NavLink href="@($"hotel-administration/edit/{ user.Id }")" class="btn btn-outline-info">Edit</NavLink>*@
-                                <button class="btn btn-outline-danger" @onclick="()=>HandleDelete(user.Id)">Delete</button>
+                                @*<button class="btn btn-outline-danger" @onclick="()=>HandleDelete(user.Id)">Delete</button>*@
                             </td>
                         </tr>
                     }
@@ -77,7 +77,7 @@
             <thead>
                 <tr class="bg-light">
                     <th>Name</th>
-                    <th>Edit/Delete</th>
+                    
                 </tr>
 
             </thead>
@@ -90,7 +90,7 @@
 
                             <td>@role.Name</td>
                             <td>
-                                <button class="btn btn-outline-danger" @onclick="()=>HandleRoleDelete(role.Id)">Delete</button>
+                                @*<button class="btn btn-outline-danger" @onclick="()=>HandleRoleDelete(role.Id)">Delete</button>*@
                             </td>
                         </tr>
                     }
