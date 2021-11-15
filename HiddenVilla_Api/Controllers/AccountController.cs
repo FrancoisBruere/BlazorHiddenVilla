@@ -1,6 +1,8 @@
 ﻿using Common;
 using DataAccess.Data;
 using HiddenVilla_Api.Helper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -75,7 +77,7 @@ namespace HiddenVilla_Api.Controllers
             return StatusCode(201);
         }
 
-
+  
 
         [HttpPost]
         [AllowAnonymous]
@@ -157,5 +159,6 @@ namespace HiddenVilla_Api.Controllers
             return claims;
         }
 
+    
     }
 }

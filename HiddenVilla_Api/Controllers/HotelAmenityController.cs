@@ -1,4 +1,5 @@
 ﻿using Business.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace HiddenVilla_Api.Controllers
         }
 
         [HttpGet]
+    
         public async Task<IActionResult> GetHotelAmenities()
         {
             var allAmenities = await _hotelAmenityRepository.GetAllHotelAmenities();

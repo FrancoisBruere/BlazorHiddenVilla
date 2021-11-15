@@ -58,7 +58,8 @@ namespace HiddenVilla_Api
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+            })
+            .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
@@ -74,6 +75,7 @@ namespace HiddenVilla_Api
 
                 };
             });
+            
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IHotelRoomRepository, HotelRoomRepository>();
@@ -142,6 +144,8 @@ namespace HiddenVilla_Api
             app.UseRouting();
 
             app.UseAuthentication(); // always add before Authorization
+            
+               
             app.UseAuthorization();
             
 
